@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.github.gzuliyujiang.oaid.DeviceID;
 import com.github.gzuliyujiang.oaid.DeviceIdentifier;
+import com.github.gzuliyujiang.oaid.IGetter;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -41,8 +42,17 @@ public class DeviceIdentifyPlugin implements FlutterPlugin, MethodCallHandler {
       result.success(ua);
     } else if(call.method.equals("getOaid")){
       if(DeviceID.supportedOAID(context)){
-        String oaid = DeviceIdentifier.getOAID(context);
-        result.success(oaid);
+        DeviceID.getOAID(context, new IGetter() {
+          @Override
+          public void onOAIDGetComplete(String oaid) {
+            result.success(oaid);
+          }
+          @Override
+          public void onOAIDGetError(Exception error) {
+            String oaid = DeviceIdentifier.getOAID(context);
+            result.success(oaid);
+          }
+        });
       }else{
         result.success(null);
       }
