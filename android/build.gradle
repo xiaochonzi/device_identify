@@ -47,7 +47,11 @@ android {
     dependencies {
         testImplementation 'junit:junit:4.13.2'
         testImplementation 'org.mockito:mockito-core:5.0.0'
-        implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.8'
+        implementation('com.github.gzu-liyujiang:Android_CN_OAID:4.2.9') {
+            runtimeOnly "com.huawei.hms:ads-identifier:3.4.62.300"
+            runtimeOnly "com.hihonor.mcs:ads-identifier:1.0.2.301"
+        }
+
     }
 
     testOptions {
